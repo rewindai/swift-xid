@@ -41,4 +41,13 @@ final class XidTests: XCTestCase {
 			XCTAssertEqual(diff, 1)
 		}
 	}
+	
+	func testXidWithTimestamp(){
+		var xid = Xid()
+		let old_id = xid.next(date: Date(timeIntervalSince1970: 0))
+		let new_id = xid.next()
+
+		XCTAssert(old_id.time().distance(to: new_id.time()) > 1000)
+		XCTAssert(old_id.time().timeIntervalSince1970 == 0)
+	}
 }

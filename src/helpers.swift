@@ -2,8 +2,8 @@ import Foundation
 
 private var xid = Xid()
 
-public func NewXid() -> Id {
-	xid.next()
+public func NewXid(date: Date? = nil) -> Id {
+	xid.next(date: date)
 }
 
 public func NewXid() -> String {

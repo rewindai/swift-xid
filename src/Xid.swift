@@ -30,11 +30,11 @@ public struct Xid {
 
 	public init() {}
 
-	public mutating func next() -> Id {
+	public mutating func next(date: Date? = nil) -> Id {
 		var bytes = Data(repeating: 0x00, count: 12)
 
 		// Timestamp, 4 bytes (big endian)
-		let ts = timestamp()
+		let ts = timestamp(date: date)
 		bytes[0] = ts[0]
 		bytes[1] = ts[1]
 		bytes[2] = ts[2]
@@ -91,8 +91,8 @@ public struct Xid {
 		return Data(data[2...3])
 	}
 
-	func timestamp() -> Data {
-		var n = UInt32(Date().timeIntervalSince1970).bigEndian
+	func timestamp(date: Date? = nil) -> Data {
+		var n = UInt32((date ?? Date()).timeIntervalSince1970).bigEndian
 		let data = Data(bytes: &n, count: MemoryLayout.size(ofValue: n))
 
 		return data
